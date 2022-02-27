@@ -74,11 +74,14 @@
 	W_TEMP
 	STATUS_TEMP
 	BSR_TEMP
+
 	
 	POSM				;POSICION MUESTRA
+	POSICION_SERVO
+	POS_S1
 	ENDC
 ;VALORES DEFINIDOS:
-MUESTRAS    EQU	    .100
+MUESTRAS    EQU	    .15
 
 ;ZONA DE CODIGOS*******************************************************************************************
  
@@ -127,7 +130,12 @@ INICIO
 ;*********************************************************************************
 ;**************************  ZONA DE CODIGO USUARIO  *****************************
 ;*********************************************************************************	
-	   
+	    BSF		TRISA,0
+	    BSF		TRISA,1
+	    
+	    BCF		TRISB,0
+	    
+	    CLRF	POS_S1
 	    BCF		SERVO_A		    ;LIMPAR PIN RB0
 	    MOVLW	MUESTRAS
 	    MOVWF	POSM		    ;POSICION MUESTRA
@@ -139,52 +147,66 @@ INICIO
 	    
 PRINCIPAL
 	   
-	   CALL		SERVO_0
-	   CALL		RET_18MS
-	   ;RUTINA DE RETARDO
-	   DECFSZ	POSM,F		;Decrementa el MUESTRAS y salta si es 0
-	   GOTO		PRINCIPAL
-	   MOVLW	MUESTRAS
-	   MOVWF	POSM
-	   
-GIRO_45	   
-	   CALL		SERVO_45
-	   CALL		RET_18MS
-	   ;RUTINA DE RETARDO
-	   DECFSZ	POSM,F		;Decrementa el MUESTRAS y salta si es 0
-	   GOTO		GIRO_45
-	   MOVLW	MUESTRAS
-	   MOVWF	POSM
-	   
-GIRO_90
-	   CALL		SERVO_90
-	   CALL		RET_18MS
-	   ;RUTINA DE RETARDO
-	   DECFSZ	POSM,F		;Decrementa el MUESTRAS y salta si es 0
-	   GOTO		GIRO_90
-	   MOVLW	MUESTRAS
-	   MOVWF	POSM
-	   
-GIRO_135
-	   CALL		SERVO_135
-	   CALL		RET_18MS
-	   ;RUTINA DE RETARDO
-	   DECFSZ	POSM,F		;Decrementa el MUESTRAS y salta si es 0
-	   GOTO		GIRO_135
-	   MOVLW	MUESTRAS
-	   MOVWF	POSM	
-	   
-GIRO_180
-	   CALL		SERVO_180
-	   CALL		RET_18MS
-	   ;RUTINA DE RETARDO
-	   DECFSZ	POSM,F		;Decrementa el MUESTRAS y salta si es 0
-	   GOTO		GIRO_180
-	   MOVLW	MUESTRAS
-	   MOVWF	POSM
-;	   
-	   GOTO		PRINCIPAL
+	    BTFSS	PORTA,0
+	    GOTO	INC_POS1
+	    BTFSS	PORTA,1
+	    GOTO	DEC_POS1
+	    
+EJECUTA_SERVO1
+	    MOVFF	POS_S1,POSICION_SERVO
+	    BSF		SERVO_A
+	    CALL	RET_1MS			    ;SERVO EMPIEZA EN LA POSICION 0 QUE CORRESPONTE A UN PULSO DE 1MS (YA QUE LA SEÑAL COMPLETA ES DE 2 MILISEGUNDOS)
 
+;RUTINA DE ENCENDIDO/APAGADO DURANTE EL SIGUIENTE MILI SEGUNDO PARA COMPLETAR LOS 2 MILISEGUNDOS
+MOVIMIENTO_SERVO1
+	    CALL	RET_SERVO		    ;RETARDO DE 5.5 uS QUE ES EL RETARDO PARA GENERAR 1° EN EL SERVO  
+	    DECF	POSICION_SERVO,F
+	    MOVF	POSICION_SERVO,W
+	    SUBLW	.255
+	    BTFSS	STATUS,Z
+	    GOTO	MOVIMIENTO_SERVO1
+	    BCF		SERVO_A
+	    CLRF	POSICION_SERVO
+	    MOVLW	.180
+	    SUBWF	POS_S1,W
+	    MOVWF	POSICION_SERVO
+	    
+COMPLEMENTO_SERVO1
+	    CALL	RET_NOP
+	    DECF	POSICION_SERVO,F
+	    MOVF	POSICION_SERVO,W
+	    SUBLW	.255
+	    BTFSS	STATUS,Z
+	    GOTO	COMPLEMENTO_SERVO1
+;AQUI TERMINO LOS 2 MILI SEGUNDOS PARA PODER CONTROLAR EL SERVO, Y QUEDA 18MILISEGUNDO PARA COMPLETAR LOS 20MS QUE SE REQUIEREN PARA EL CONTROL DE SERVOMOTOR
+	    CALL	RET_18MS
+	    GOTO	PRINCIPAL
+
+INC_POS1    
+	    INCF	POS_S1,F
+	    MOVF	POS_S1,W
+	    XORLW	.181
+	    BTFSS	STATUS,Z
+	    GOTO	EJECUTA_SERVO1
+	    MOVLW	.180
+	    MOVWF	POS_S1
+	    GOTO	EJECUTA_SERVO1
+	    
+DEC_POS1
+	    DECF	POS_S1,F
+	    MOVF	POS_S1,W
+	    XORLW	.255
+	    BTFSS	STATUS,Z
+	    GOTO	EJECUTA_SERVO1
+	    MOVLW	.0
+	    MOVWF	POS_S1
+	    GOTO	EJECUTA_SERVO1
+	    
+RET_NOP	    RETURN
+	    
+	    
+	    
+	    
 ;simpre se debe respetar que el tiempo minimo es 1ms y el tiempo maximo es de 2ms , se debe completar los 2 ms siempre	    
 SERVO_0	    ;para que se mantenga en 45° de deba mandar un pulso de alto de 1.00ms y 1.00ms en bajo
 	    BSF		SERVO_A
@@ -225,6 +247,20 @@ SERVO_180   ;para que se mantenga en 180° de deba mandar un pulso de alto de 2ms
 	    CALL	RET_1MS
 	    BCF		SERVO_A
 	    RETURN
+
+RET_SERVO   ;RETARDO DE 5.5 uS QUE ES EL RETARDO PARA GENERAR 1° EN EL SERVO
+	    MOVLW	B'00000100'
+	    MOVWF	T0CON
+	    BCF		INTCON,TMR0IF
+	    MOVLW	0XFF
+	    MOVWF	TMR0H
+	    MOVLW	0XFC
+	    MOVWF	TMR0L
+	    BSF		T0CON,TMR0ON
+	    GOTO	BUCLE_RETARDO
+	    
+	    
+	    
 ;FORMULA:
 ;    MODO 8 BITS: T=(4/FOSC)*[PREE]*[255-TMR0]
 ;    
