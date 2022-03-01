@@ -67,7 +67,13 @@
   CONFIG  EBTRB = OFF           ; Boot Block Table Read Protection bit (Boot Block (000000-0007FFh) not protected from table reads executed in other blocks)
 
 ;ZONA DE DEFINICIONES**************************************************************************************
-#DEFINE	  SERVO_A  LATB,0	;PIN DE CONTROL PINB0
+#DEFINE	    SERVO_1	LATB,0	;PIN DE CONTROL PINB0 SERVO 1
+#DEFINE	    SERVO_2	LATB,1	;PIN DE CONTROL PINB1 SERVO 2 
+
+#DEFINE	    INCR_SERV1	PORTA,0 ;INCREMENTA EL ANGULO DEL SERVO 1
+#DEFINE	    DECR_SERV1	PORTA,1	;DECREMENTA EL ANGULO DEL SERVO 1  
+#DEFINE	    INCR_SERV2	PORTA,2	;INCREMENTA EL ANGULO DEL SERVO 2
+#DEFINE	    DECR_SERV2	PORTA,3 ;DECREMENTA EL ANGULO DEL SERVO 2  
   
 ;DEFINIR LAS VARIABLES:	
 	CBLOCK	0x00			;QUE EMPIECE EN LA PRIMERA DIRECCION DE LA MEMORIA RAM
@@ -77,13 +83,14 @@
 
 	
 	POSM				;POSICION MUESTRA
-	POSICION_SERVO
-	POS_S1
+	POSICION_SERVO			;VARIABLE AUXILIAR
+	POS_S1				;POSICIÓN SERVO 1
+	POS_S2				;POSICIÓN SERVO 2
 	ENDC
 ;VALORES DEFINIDOS:
 MUESTRAS    EQU	    .15
 
-;ZONA DE CODIGOS*******************************************************************************************
+;*************************ZONA DE CODIGOS*******************************************************************************************
  
 ;|ETIQUETAS | MNEMÓNICO	| OPERANDOS	    |COMENTARIOS
 
@@ -132,13 +139,20 @@ INICIO
 ;*********************************************************************************	
 	    BSF		TRISA,0
 	    BSF		TRISA,1
+	    BSF		TRISA,2
+	    BSF		TRISA,3
 	    
 	    BCF		TRISB,0
+	    BCF		TRISB,1
 	    
 	    CLRF	POS_S1
-	    BCF		SERVO_A		    ;LIMPAR PIN RB0
-	    MOVLW	MUESTRAS
-	    MOVWF	POSM		    ;POSICION MUESTRA
+	    CLRF	POS_S2
+	    
+	    BCF		SERVO_1		    ;LIMPAR PIN SERVO 1
+	    BCF		SERVO_2		    ;APAGAR PIN SERVO 2
+	    
+;	    MOVLW	MUESTRAS
+;	    MOVWF	POSM		    ;POSICION MUESTRA
 	    
 	    ;pasos del servo  1ms -> 180°
 	    ;			x -> 1°    x =(1x10^-3 * 1°)/180° = 5.55x10^-6 -> 5.6us
@@ -146,16 +160,27 @@ INICIO
 	    ; 1ms es la señal minima y se debe dividir en 180 pasos
 	    
 PRINCIPAL
-	    BTFSS	PORTA,0
+; TESTEO DE SERVO 1
+	    BTFSS	INCR_SERV1
 	    GOTO	INC_POS1
-	    BTFSS	PORTA,1
+	    BTFSS	DECR_SERV1
 	    GOTO	DEC_POS1
+;   TESTEO DE SERVO 2
+	    BTFSS	INCR_SERV2
+	    GOTO	INC_POS2
+	    BTFSS	DECR_SERV2
+	    GOTO	DEC_POS2
+;***************************************************************************************	    
+;*******************************CONTROL DEL SERVO 1********************************************************	    
 	    
 EJECUTA_SERVO1
 	    MOVFF	POS_S1,POSICION_SERVO
-	    BSF		SERVO_A
+	    BSF		SERVO_1
 	    CALL	RET_1MS			    ;SERVO EMPIEZA EN LA POSICION 0 QUE CORRESPONTE A UN PULSO DE 1MS (YA QUE LA SEÑAL COMPLETA ES DE 2 MILISEGUNDOS)
 
+	    
+
+;****************************************************************************************************************
 ;RUTINA DE ENCENDIDO/APAGADO DURANTE EL SIGUIENTE MILI SEGUNDO PARA COMPLETAR LOS 2 MILISEGUNDOS
 MOVIMIENTO_SERVO1
 	    CALL	RET_SERVO		    ;RETARDO DE 5.5 uS QUE ES EL RETARDO PARA GENERAR 1° EN EL SERVO  
@@ -164,7 +189,7 @@ MOVIMIENTO_SERVO1
 	    SUBLW	.255
 	    BTFSS	STATUS,Z
 	    GOTO	MOVIMIENTO_SERVO1
-	    BCF		SERVO_A
+	    BCF		SERVO_1
 	    CLRF	POSICION_SERVO
 	    MOVLW	.180
 	    SUBWF	POS_S1,W
@@ -178,9 +203,46 @@ COMPLEMENTO_SERVO1
 	    BTFSS	STATUS,Z
 	    GOTO	COMPLEMENTO_SERVO1
 ;AQUI TERMINO LOS 2 MILI SEGUNDOS PARA PODER CONTROLAR EL SERVO, Y QUEDA 18MILISEGUNDO PARA COMPLETAR LOS 20MS QUE SE REQUIEREN PARA EL CONTROL DE SERVOMOTOR
-	    CALL	RET_18MS
+
+;******************************************************************************************
+;*******************************CONTROL DEL SERVO 2********************************************************	    
+    
+EJECUTA_SERVO2
+	    MOVFF	POS_S2,POSICION_SERVO
+	    BSF		SERVO_2
+	    CALL	RET_1MS			    ;SERVO EMPIEZA EN LA POSICION 0 QUE CORRESPONTE A UN PULSO DE 1MS (YA QUE LA SEÑAL COMPLETA ES DE 2 MILISEGUNDOS)
+
+	    
+
+;****************************************************************************************************************
+;RUTINA DE ENCENDIDO/APAGADO DURANTE EL SIGUIENTE MILI SEGUNDO PARA COMPLETAR LOS 2 MILISEGUNDOS
+MOVIMIENTO_SERVO2
+	    CALL	RET_SERVO		    ;RETARDO DE 5.5 uS QUE ES EL RETARDO PARA GENERAR 1° EN EL SERVO  
+	    DECF	POSICION_SERVO,F
+	    MOVF	POSICION_SERVO,W
+	    SUBLW	.255
+	    BTFSS	STATUS,Z
+	    GOTO	MOVIMIENTO_SERVO2
+	    BCF		SERVO_2
+	    CLRF	POSICION_SERVO
+	    MOVLW	.180
+	    SUBWF	POS_S2,W
+	    MOVWF	POSICION_SERVO
+	    
+COMPLEMENTO_SERVO2
+	    CALL	RET_NOP
+	    DECF	POSICION_SERVO,F
+	    MOVF	POSICION_SERVO,W
+	    SUBLW	.255
+	    BTFSS	STATUS,Z
+	    GOTO	COMPLEMENTO_SERVO2
+;AQUI TERMINO LOS 2 MILI SEGUNDOS PARA PODER CONTROLAR EL SERVO, Y QUEDA 18MILISEGUNDO PARA COMPLETAR LOS 20MS QUE SE REQUIEREN PARA EL CONTROL DE SERVOMOTOR
+	    CALL	RET_16MS	;RETARDO DE 16MS YA QUE CADA SERVO SE CONTROLA UN PULSO EN ALTO DE 2MS, 2MS (SERVO1) + 2MS (SERVO2) =4MS ; 4MS + 16MS = 20MS PARA EN CONTROL DE LOS SERVOS, SE PUEDEN USAR HASTA 8 SERVOS CON UN PERIODO DE 20MS
 	    GOTO	PRINCIPAL
 
+	    
+;*******************************************************************************	    
+;******************************SUBRUTINAS***************************************
 INC_POS1    
 	    INCF	POS_S1,F
 	    MOVF	POS_S1,W
@@ -200,6 +262,29 @@ DEC_POS1
 	    MOVLW	.0
 	    MOVWF	POS_S1
 	    GOTO	EJECUTA_SERVO1
+;******************************************************************************	    
+INC_POS2    
+	    INCF	POS_S2,F
+	    MOVF	POS_S2,W
+	    XORLW	.181
+	    BTFSS	STATUS,Z
+	    GOTO	EJECUTA_SERVO2
+	    MOVLW	.180
+	    MOVWF	POS_S2
+	    GOTO	EJECUTA_SERVO2
+	    
+DEC_POS2
+	    DECF	POS_S2,F
+	    MOVF	POS_S2,W
+	    XORLW	.255
+	    BTFSS	STATUS,Z
+	    GOTO	EJECUTA_SERVO2
+	    MOVLW	.0
+	    MOVWF	POS_S2
+	    GOTO	EJECUTA_SERVO2	    
+	    
+	    
+	    
 	    
 RET_NOP	    RETURN
 	    
@@ -208,56 +293,66 @@ RET_NOP	    RETURN
 	    
 ;simpre se debe respetar que el tiempo minimo es 1ms y el tiempo maximo es de 2ms , se debe completar los 2 ms siempre	    
 SERVO_0	    ;para que se mantenga en 45° de deba mandar un pulso de alto de 1.00ms y 1.00ms en bajo
-	    BSF		SERVO_A
+	    BSF		SERVO_1
 	    CALL	RET_1MS
-	    BCF		SERVO_A
+	    BCF		SERVO_1
 	    CALL	RET_1MS
 	    RETURN
 	    
 SERVO_45    ;para que se mantenga en 45° de deba mandar un pulso de alto de 1.25ms y 0.75ms en bajo
-	    BSF		SERVO_A
+	    BSF		SERVO_1
 	    CALL	RET_1MS
 	    CALL	RET_250US
-	    BCF		SERVO_A
+	    BCF		SERVO_1
 	    CALL	RET_500US
 	    CALL	RET_250US
 	    RETURN
 
 SERVO_90    ;para que se mantenga en 90° de deba mandar un pulso de alto de 1.5ms y 0.5ms en bajo
-	    BSF		SERVO_A
+	    BSF		SERVO_1
 	    CALL	RET_1MS
 	    CALL	RET_500US
-	    BCF		SERVO_A
+	    BCF		SERVO_1
 	    CALL	RET_500US
 	    RETURN
 	    
 SERVO_135   ;para que se mantenga en 135° de deba mandar un pulso de alto de 1.75ms y 0.25ms en bajo
-	    BSF		SERVO_A
+	    BSF		SERVO_1
 	    CALL	RET_1MS
 	    CALL	RET_500US
 	    CALL	RET_250US
-	    BCF		SERVO_A
+	    BCF		SERVO_1
 	    CALL	RET_250US
 	    RETURN
 	    
 SERVO_180   ;para que se mantenga en 180° de deba mandar un pulso de alto de 2ms y 0ms en bajo
-	    BSF		SERVO_A
+	    BSF		SERVO_1
 	    CALL	RET_1MS
 	    CALL	RET_1MS
-	    BCF		SERVO_A
+	    BCF		SERVO_1
 	    RETURN
 
+;RET_SERVO   ;(ORIGINAL) RETARDO DE 5.5 uS QUE ES EL RETARDO PARA GENERAR 1° EN EL SERVO
+;	    MOVLW	B'00000100'
+;	    MOVWF	T0CON
+;	    BCF		INTCON,TMR0IF
+;	    MOVLW	0XFF
+;	    MOVWF	TMR0H
+;	    MOVLW	0XFC
+;	    MOVWF	TMR0L
+;	    BSF		T0CON,TMR0ON
+;	    GOTO	BUCLE_RETARDO
+
 RET_SERVO   ;RETARDO DE 5.5 uS QUE ES EL RETARDO PARA GENERAR 1° EN EL SERVO
-	    MOVLW	B'00000100'
+	    MOVLW	B'00000011'
 	    MOVWF	T0CON
 	    BCF		INTCON,TMR0IF
 	    MOVLW	0XFF
 	    MOVWF	TMR0H
-	    MOVLW	0XFC
+	    MOVLW	0XF9
 	    MOVWF	TMR0L
 	    BSF		T0CON,TMR0ON
 	    GOTO	BUCLE_RETARDO
-	    
 	    
 	    
 ;FORMULA:
@@ -297,7 +392,6 @@ RET_10MS
 	    BSF		T0CON,TMR0ON
 	    GOTO	BUCLE_RETARDO
 
-
 RET_1MS
 	    
 	    MOVLW	B'01000101'	    ;EMPEZAR DETENIDO, MODO 8 BITS, CLK INTERNO (FCY),PREE ASIGNADO; PRE= 1:64
@@ -307,6 +401,19 @@ RET_1MS
 	    MOVWF	TMR0		    ;CARGAR EL REGISTRO TMR0
 	    BSF		T0CON,TMR0ON	    ;ENCENDER EL TEMPORIZADOR
 	    GOTO	BUCLE_RETARDO
+	    
+;RET_1MS
+;	    
+;	    MOVLW	B'01000100'	    ;EMPEZAR DETENIDO, MODO 8 BITS, CLK INTERNO (FCY),PREE ASIGNADO; PRE= 1:64
+;	    MOVWF	T0CON
+;	    BCF		INTCON,TMR0IF	    ;LIMPIAR BANDERA DE DESBORDAMIENTO DE TMR0
+;	    MOVLW	0XFE
+;	    MOVWF	TMR0H		    ;CARGAR EL REGISTRO TMR0
+;	    MOVLW	0X0B
+;	    MOVWF	TMR0L		    ;CARGAR EL REGISTRO TMR0
+;	    BSF		T0CON,TMR0ON	    ;ENCENDER EL TEMPORIZADOR
+;	    GOTO	BUCLE_RETARDO
+	    
 RET_5MS
 	    MOVLW	B'00000000'	    ;EMPEZAR DETENIDO, MODO 16 BITS, CLK INTERNO (FCY),PREE ASIGNADO; PRE= 1:2   
 	    MOVWF	T0CON
@@ -315,6 +422,17 @@ RET_5MS
 	    MOVWF	TMR0L
 	    MOVLW	.99
 	    MOVWF	TMR0H
+	    BSF		T0CON,TMR0ON
+	    GOTO	BUCLE_RETARDO
+	    
+RET_16MS
+	    MOVLW	B'00000100'	    ;EMPEZAR DETENIDO, MODO 16 BITS, CLK INTERNO (FCY),PREE ASIGNADO; PRE= 1:2   
+	    MOVWF	T0CON
+	    BCF		INTCON,TMR0IF
+	    MOVLW	0XE0
+	    MOVWF	TMR0H
+	    MOVLW	0XBF
+	    MOVWF	TMR0L
 	    BSF		T0CON,TMR0ON
 	    GOTO	BUCLE_RETARDO
 	    
