@@ -1,4 +1,4 @@
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE  1
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -57,7 +57,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00035   CONFIG  STVREN = ON           ; Stack Full/Underflow Reset Enable bit (Stack full/underflow will cause
                              Reset)
                       00036   CONFIG  LVP = OFF             ; Single-Supply ICSP Enable bit (Single-Supply ICSP disabled)
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE  2
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -116,324 +116,299 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00073 ;DEFINIR LAS VARIABLES: 
                       00074   
                       00075         CBLOCK  0x00                    ;QUE EMPIECE EN LA PRIMERA DIRECCION DE LA MEMORIA RAM
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE  3
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
                       00076         ;VARIABLES PARA EL MANEJO DE INTERRUPCIONES
-  00000000            00077         W_TEMP
-  00000001            00078         STATUS_TEMP
-  00000002            00079         BSR_TEMP
-                      00080 
+                      00077         ;W_TEMP
+                      00078         ;STATUS_TEMP
+                      00079         ;BSR_TEMP
+                      00080         
                       00081         ;VARIABLES PARA EJECUCION DEL PROGRAMA
-                      00082         ENDC
-                      00083 ;VALORES DEFINIDOS:
-                      00084 
-                      00085 ;*************************ZONA DE CODIGOS***************************************************************
+  00000000            00082         DUTY
+                      00083         ENDC
+                      00084 ;VALORES DEFINIDOS:
+                      00085 
+                      00086 ;*************************ZONA DE CODIGOS***************************************************************
                             ****************************
-                      00086  
-                      00087 ;|ETIQUETAS | MNEMÓNICO | OPERANDOS         |COMENTARIOS
-                      00088 
-                      00089             ORG         0x000               ; ORIGEN INICIO RESET
-000000 EF?? F???      00090             GOTO        INICIO              ; ME VOY A INICIO
-                      00091             ORG         0x008               ; ORIGEN ISR ALTA PRIORIDAD
-000008 EF?? F???      00092             GOTO        ALTA_PRIORIDAD
-                      00093             ORG         0x018               ; ORIGEN ISR BAJA PRIORIDAD
-000018 EF?? F???      00094             GOTO        BAJA_PRIORIDAD      
-00001C                00095 BAJA_PRIORIDAD
-00001C 6E00           00096             MOVWF       W_TEMP              ; MUEVO EL ULTIMA VALOR DE W 
-00001E CFD8 F001      00097             MOVFF       STATUS,STATUS_TEMP  ; DE STATUS Y DE BSR
-000022 CFE0 F002      00098             MOVFF       BSR,BSR_TEMP        ; PARA RESTAURARLOS AL VALOR ANTES DE LA INTERRUPCION
-000026                00099 FIN_INTER
-000026 6E00           00100             MOVWF       W_TEMP              ; MUEVO EL ULTIMA VALOR DE W 
-000028 CFD8 F001      00101             MOVFF       STATUS,STATUS_TEMP  ; DE STATUS Y DE BSR
-00002C CFE0 F002      00102             MOVFF       BSR,BSR_TEMP        ; PARA RESTAURARLOS AL VALOR ANTES DE LA INTERRUPCION
-000030 0012           00103             RETURN                          ; REGRESO DE INTERRUPCION
-000032                00104 ALTA_PRIORIDAD
-000032 EF?? F???      00105             GOTO        FIN_INTER           ; VE A FINAL DE INTERRUPCION
-                      00106         
-                      00107 ;*********************************************************************************
-                      00108 ;**************************CONFIGURACIÓN DE PUERTOS ******************************
+                      00087  
+                      00088 ;|ETIQUETAS | MNEMÓNICO | OPERANDOS         |COMENTARIOS
+                      00089 
+                      00090             ORG         0x000               ; ORIGEN INICIO RESET
+000000 EF?? F???      00091             GOTO        INICIO              ; ME VOY A INICIO
+                      00092 ;;DESCOMENTAR SI SE USA INTERRUPCIONES
+                      00093 ;           ORG         0x008               ; ORIGEN ISR ALTA PRIORIDAD
+                      00094 ;           GOTO        ALTA_PRIORIDAD
+                      00095 ;           ORG         0x018               ; ORIGEN ISR BAJA PRIORIDAD
+                      00096 ;           GOTO        BAJA_PRIORIDAD      
+                      00097 ;BAJA_PRIORIDAD
+                      00098 ;           MOVWF       W_TEMP              ; MUEVO EL ULTIMA VALOR DE W 
+                      00099 ;           MOVFF       STATUS,STATUS_TEMP  ; DE STATUS Y DE BSR
+                      00100 ;           MOVFF       BSR,BSR_TEMP        ; PARA RESTAURARLOS AL VALOR ANTES DE LA INTERRUPCION
+                      00101 ;FIN_INTER
+                      00102 ;           MOVWF       W_TEMP              ; MUEVO EL ULTIMA VALOR DE W 
+                      00103 ;           MOVFF       STATUS,STATUS_TEMP  ; DE STATUS Y DE BSR
+                      00104 ;           MOVFF       BSR,BSR_TEMP        ; PARA RESTAURARLOS AL VALOR ANTES DE LA INTERRUPCION
+                      00105 ;           RETURN                          ; REGRESO DE INTERRUPCION
+                      00106 ;ALTA_PRIORIDAD
+                      00107 ;           GOTO        FIN_INTER           ; VE A FINAL DE INTERRUPCION
+                      00108         
                       00109 ;*********************************************************************************
-000036                00110 INICIO  
-000036 010F           00111             MOVLB       0xF                 ; PARA ACCEDER CORRECTAMENTE
-000038 6B38           00112             CLRF        ANSELA              ; ANALOGICAS NECESARIAS Y LO
-00003A 6B39           00113             CLRF        ANSELB              ; DEMAS COMO ENTRADAS Y SALIDAS
-00003C 6B3A           00114             CLRF        ANSELC              ; DIGITALES
-00003E 010F           00115             MOVLB       0xF
-000040 6A80           00116             CLRF        PORTA               ; LIMPIO EL PUERTO A
-000042 6A81           00117             CLRF        PORTB               ; LIMPIO EL PUERTO B
-000044 6A82           00118             CLRF        PORTC               ; LIMPIO EL PUERTO C
-000046 0100           00119             MOVLB       0X0                 ; PARA ACCEDER CORRECTAMENTE        
-000048 6A89           00120             CLRF        LATA                ; LIMPIO LATCH A
-00004A 6A8A           00121             CLRF        LATB                ; LIMPIO LATCH B
-00004C 6A8B           00122             CLRF        LATC                ; LIMPIO LATCH C
-                      00123         
-00004E 6A92           00124             CLRF        TRISA               ; SALIDAS DIGITALES PUERTO A
-000050 6A93           00125             CLRF        TRISB               ; SALIDAS DIGITALES PUERTO B
-000052 6A94           00126             CLRF        TRISC               ; SALIDAS DIGITALES PUERTO C
-                      00127 
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE  4
+                      00110 ;**************************CONFIGURACIÓN DE PUERTOS ******************************
+                      00111 ;*********************************************************************************
+000004                00112 INICIO  
+000004 010F           00113             MOVLB       0xF                 ; PARA ACCEDER CORRECTAMENTE
+000006 6B38           00114             CLRF        ANSELA              ; ANALOGICAS NECESARIAS Y LO
+000008 6B39           00115             CLRF        ANSELB              ; DEMAS COMO ENTRADAS Y SALIDAS
+00000A 6B3A           00116             CLRF        ANSELC              ; DIGITALES
+00000C 010F           00117             MOVLB       0xF
+00000E 6A80           00118             CLRF        PORTA               ; LIMPIO EL PUERTO A
+000010 6A81           00119             CLRF        PORTB               ; LIMPIO EL PUERTO B
+000012 6A82           00120             CLRF        PORTC               ; LIMPIO EL PUERTO C
+000014 0100           00121             MOVLB       0X0                 ; PARA ACCEDER CORRECTAMENTE        
+000016 6A89           00122             CLRF        LATA                ; LIMPIO LATCH A
+000018 6A8A           00123             CLRF        LATB                ; LIMPIO LATCH B
+00001A 6A8B           00124             CLRF        LATC                ; LIMPIO LATCH C
+                      00125         
+00001C 6A92           00126             CLRF        TRISA               ; SALIDAS DIGITALES PUERTO A
+00001E 6A93           00127             CLRF        TRISB               ; SALIDAS DIGITALES PUERTO B
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE  4
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00128                     
-                      00129 ;*********************************************************************************
-                      00130 ;**************************  ZONA DE CODIGO USUARIO  *****************************
-                      00131 ;*********************************************************************************      
-000054 9093           00132             BCF         TRISB,0
-000056 9293           00133             BCF         TRISB,1
-000058 9493           00134             BCF         TRISB,2
-00005A 9693           00135             BCF         TRISB,3
-                      00136             
-00005C 8092           00137             BSF         TRISA,0
-00005E 8292           00138             BSF         TRISA,1
-                      00139             
-000060                00140 PRINCIPAL
-                      00141 
-000060 A080           00142             BTFSS       SW_HORARIO              ;EL PULSADOR RA0 ESTA EN ALTO? SI, SALTA UNA INSTRUCCION
-                            , NO, SIGUE A LA SIGUIENTE INSTRUCCION
-000062 EC?? F???      00143             CALL        HORARIO                 ;NO, ESTA EN BAJO, VE A LA SUBRUTINA HORARIO
-000066 A280           00144             BTFSS       SW_ANTIHORARIO          ;SI ESTA EN ALTO, PREGUNTA EL PULSADOR RA1 ESTA EN ALTO?
-                             SI, SALTA UNA INSTRUCCION, NO, SIGUE A LA SIGUIENTE INSTRUCCION
-000068 EC?? F???      00145             CALL        ANTIHORARIO             ;NO, ESTA EN BAJO, VE A LA SUBRUTINA ANTIHORARIO
-00006C EF?? F???      00146             GOTO        PRINCIPAL               ;SI ESTA EN ALTO, VE A LA ETIQUETA PRINCIPAL Y REPITE EL
-                             PROCESO
-                      00147 
+000020 6A94           00128             CLRF        TRISC               ; SALIDAS DIGITALES PUERTO C
+                      00129 
+                      00130                     
+                      00131 ;*********************************************************************************
+                      00132 ;**************************  ZONA DE CODIGO USUARIO  *****************************
+                      00133 ;*********************************************************************************      
+                      00134         ;CONFIGURACIÓN PWM: PARA EL FUNCIONAMIENTO SE NECESITA UN TEMPORIZADOR,
+                      00135         ;EN ESTE CASO USAREMOS EL TMR2
+000022 8494           00136             BSF         TRISC,2             ;PIN RC2 CCP1 MODO PWM
+                      00137             
+000024 9149           00138             BCF         CCPTMRS0,0          ;SELECCION DEL TIMER 2, PARA MODULO PWM
+000026 9349           00139             BCF         CCPTMRS0,1
+                      00140             
+000028 0E63           00141             MOVLW       0X63                
+00002A 6EBB           00142             MOVWF       PR2                 ;PERIODO DEL PWM, PARA UNA FRECUENCIA DE 10KHZ, CON PREESCAL
+                            ER DE 16
+                      00143             
+00002C 0E0C           00144             MOVLW       B'00001100'
+00002E 6EBD           00145             MOVWF       CCP1CON             ;CONFIGURAR MODULO CCP, EN MODO PWM
+                      00146             
+000030 6ABE           00147             CLRF        CCPR1L              ;CARGAR EL DUTY CYCLE CON 0
                       00148             
-                      00149 ;*********SUBRUTINAS*********************************       
-000070                00150 HORARIO     
-000070 0E01           00151             MOVLW       B'00000001'
-000072 6E8A           00152             MOVWF       LATB
-000074 EC?? F???      00153             CALL        RETARDO
-                      00154             
-000078 0E02           00155             MOVLW       B'00000010'
-00007A 6E8A           00156             MOVWF       LATB
-00007C EC?? F???      00157             CALL        RETARDO
-                      00158             
-000080 0E04           00159             MOVLW       B'00000100'
-000082 6E8A           00160             MOVWF       LATB
-000084 EC?? F???      00161             CALL        RETARDO
-                      00162             
-000088 0E08           00163             MOVLW       B'00001000'
-00008A 6E8A           00164             MOVWF       LATB
-00008C EC?? F???      00165             CALL        RETARDO
-000090 0012           00166             RETURN
-                      00167             
-000092                00168 ANTIHORARIO
-000092 0E08           00169             MOVLW       B'0001000'
-000094 6E8A           00170             MOVWF       LATB
-000096 EC?? F???      00171             CALL        RETARDO
-                      00172             
-00009A 0E04           00173             MOVLW       B'00000100'
-00009C 6E8A           00174             MOVWF       LATB
-00009E EC?? F???      00175             CALL        RETARDO
-                      00176             
-0000A2 0E02           00177             MOVLW       B'00000010'
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE  5
-
-
-LOC  OBJECT CODE     LINE SOURCE TEXT
-  VALUE
-
-0000A4 6E8A           00178             MOVWF       LATB
-0000A6 EC?? F???      00179             CALL        RETARDO
-                      00180             
-0000AA 0E01           00181             MOVLW       B'00000001'
-0000AC 6E8A           00182             MOVWF       LATB
-0000AE EC?? F???      00183             CALL        RETARDO
-0000B2 0012           00184             RETURN
-                      00185     
-                      00186 #include "MY_RETARDOS.inc"
+000032 0E07           00149             MOVLW       B'00000111'
+000034 6EBA           00150             MOVWF       T2CON               ;ENCENDER EL TMR2 CON UN PRESCALER DE 16
+                      00151             
+000036 929E           00152             BCF         PIR1,TMR2IF         ;LIMPIAR LA BANDERA DE INTERRUPCION DEL TMR2
+                      00153             
+000038 9494           00154             BCF         TRISC,2             ;HABILITAR LA SALIDA PWM DEL MODULO CCP1 (RC2)
+                      00155             
+                      00156             
+                      00157 ;**********************************LOOP***********************************************      
+00003A 6A00           00158             CLRF        DUTY
+00003C                00159 PRINCIPAL
+00003C C000 FFBE      00160             MOVFF       DUTY,CCPR1L
+000040 2A00           00161             INCF        DUTY,F
+000042 EC?? F???      00162             CALL        RET_100MS
+                      00163             
+000046 EF?? F???      00164             GOTO        PRINCIPAL
+                      00165             
+                      00166 ;**********************************SUBRUTINAS******************************************** 
+                      00167 
+                      00168     
+                      00169 #include "MY_RETARDOS.inc"
                       00001 ;CBLOCK         ;EN CBLOCK SE HACEN LAS DECLARACIONES DE VARIABLES 
                       00002     
                       00003 ;ENDC
                       00004     
                       00005 
                       00006 
-0000B4                00007 RET_SERVO   ;RETARDO DE 5.5 uS QUE ES EL RETARDO PARA GENERAR 1° EN EL SERVO
-0000B4 0E03           00008             MOVLW       B'00000011'
-0000B6 6ED5           00009             MOVWF       T0CON
-0000B8 94F2           00010             BCF         INTCON,TMR0IF
-0000BA 0EFF           00011             MOVLW       0XFF
-0000BC 6ED7           00012             MOVWF       TMR0H
-0000BE 0EF9           00013             MOVLW       0XF9
-0000C0 6ED6           00014             MOVWF       TMR0L
-0000C2 8ED5           00015             BSF         T0CON,TMR0ON
-0000C4 EF?? F???      00016             GOTO        BUCLE_RETARDO
+00004A                00007 RET_SERVO   ;RETARDO DE 5.5 uS QUE ES EL RETARDO PARA GENERAR 1° EN EL SERVO
+00004A 0E03           00008             MOVLW       B'00000011'
+00004C 6ED5           00009             MOVWF       T0CON
+00004E 94F2           00010             BCF         INTCON,TMR0IF
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000050 0EFF           00011             MOVLW       0XFF
+000052 6ED7           00012             MOVWF       TMR0H
+000054 0EF9           00013             MOVLW       0XF9
+000056 6ED6           00014             MOVWF       TMR0L
+000058 8ED5           00015             BSF         T0CON,TMR0ON
+00005A EF?? F???      00016             GOTO        BUCLE_RETARDO
                       00017             
                       00018             
                       00019 ;FORMULA:
                       00020 ;    MODO 8 BITS: T=(4/FOSC)*[PREE]*[255-TMR0]
                       00021 ;    
                       00022 ;    MODO 8 BITS: T=(4/FOSC)*[PREE]*[65535-TMR0]
-0000C8                00023 RET_1S
-0000C8 0E07           00024             MOVLW       B'00000111'         ;EMPEZAR DETENIDO, MODO 16 BITS, CLK INTERNO (FCY),PREE ASIG
+00005E                00023 RET_1S
+00005E 0E07           00024             MOVLW       B'00000111'         ;EMPEZAR DETENIDO, MODO 16 BITS, CLK INTERNO (FCY),PREE ASIG
                             NADO; PRE= 1:256  
-0000CA 6ED5           00025             MOVWF       T0CON
-0000CC 94F2           00026             BCF         INTCON,TMR0IF
-0000CE 0E0B           00027             MOVLW       0X0B
-0000D0 6ED7           00028             MOVWF       TMR0H
-0000D2 0EBD           00029             MOVLW       0XBD
-0000D4 6ED6           00030             MOVWF       TMR0L
-0000D6 8ED5           00031             BSF         T0CON,TMR0ON
-0000D8 EF?? F???      00032             GOTO        BUCLE_RETARDO       
+000060 6ED5           00025             MOVWF       T0CON
+000062 94F2           00026             BCF         INTCON,TMR0IF
+000064 0E0B           00027             MOVLW       0X0B
+000066 6ED7           00028             MOVWF       TMR0H
+000068 0EBD           00029             MOVLW       0XBD
+00006A 6ED6           00030             MOVWF       TMR0L
+00006C 8ED5           00031             BSF         T0CON,TMR0ON
+00006E EF?? F???      00032             GOTO        BUCLE_RETARDO       
                       00033             
                       00034             
                       00035             
-0000DC                00036 RET_500MS
-0000DC 0E07           00037             MOVLW       B'00000111'         ;EMPEZAR DETENIDO, MODO 16 BITS, CLK INTERNO (FCY),PREE ASIG
+000072                00036 RET_500MS
+000072 0E07           00037             MOVLW       B'00000111'         ;EMPEZAR DETENIDO, MODO 16 BITS, CLK INTERNO (FCY),PREE ASIG
                             NADO; PRE= 1:256  
-0000DE 6ED5           00038             MOVWF       T0CON
-0000E0 94F2           00039             BCF         INTCON,TMR0IF
-0000E2 0E85           00040             MOVLW       0X85
-0000E4 6ED7           00041             MOVWF       TMR0H
-0000E6 0EED           00042             MOVLW       0XED
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE  6
-
-
-LOC  OBJECT CODE     LINE SOURCE TEXT
-  VALUE
-
-0000E8 6ED6           00043             MOVWF       TMR0L
-0000EA 8ED5           00044             BSF         T0CON,TMR0ON
-0000EC EF?? F???      00045             GOTO        BUCLE_RETARDO       
+000074 6ED5           00038             MOVWF       T0CON
+000076 94F2           00039             BCF         INTCON,TMR0IF
+000078 0E85           00040             MOVLW       0X85
+00007A 6ED7           00041             MOVWF       TMR0H
+00007C 0EED           00042             MOVLW       0XED
+00007E 6ED6           00043             MOVWF       TMR0L
+000080 8ED5           00044             BSF         T0CON,TMR0ON
+000082 EF?? F???      00045             GOTO        BUCLE_RETARDO       
                       00046             
                       00047             
-0000F0                00048 RET_100MS
-0000F0 0E04           00049             MOVLW       B'00000100'         ;EMPEZAR DETENIDO, MODO 16 BITS, CLK INTERNO (FCY),PREE ASIG
+000086                00048 RET_100MS
+000086 0E04           00049             MOVLW       B'00000100'         ;EMPEZAR DETENIDO, MODO 16 BITS, CLK INTERNO (FCY),PREE ASIG
                             NADO; PRE= 1:2   
-0000F2 6ED5           00050             MOVWF       T0CON
-0000F4 94F2           00051             BCF         INTCON,TMR0IF
-0000F6 0E3C           00052             MOVLW       0X3C
-0000F8 6ED7           00053             MOVWF       TMR0H
-0000FA 0EB0           00054             MOVLW       0XB0
-0000FC 6ED6           00055             MOVWF       TMR0L
-0000FE 8ED5           00056             BSF         T0CON,TMR0ON
-000100 EF?? F???      00057             GOTO        BUCLE_RETARDO 
+000088 6ED5           00050             MOVWF       T0CON
+00008A 94F2           00051             BCF         INTCON,TMR0IF
+00008C 0E3C           00052             MOVLW       0X3C
+00008E 6ED7           00053             MOVWF       TMR0H
+000090 0EB0           00054             MOVLW       0XB0
+000092 6ED6           00055             MOVWF       TMR0L
+000094 8ED5           00056             BSF         T0CON,TMR0ON
+000096 EF?? F???      00057             GOTO        BUCLE_RETARDO 
                       00058             
-000104                00059 RET_50MS
-000104 0E04           00060             MOVLW       B'00000100'         ;EMPEZAR DETENIDO, MODO 16 BITS, CLK INTERNO (FCY),PREE ASIG
+00009A                00059 RET_50MS
+00009A 0E04           00060             MOVLW       B'00000100'         ;EMPEZAR DETENIDO, MODO 16 BITS, CLK INTERNO (FCY),PREE ASIG
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE  6
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
                             NADO; PRE= 1:2   
-000106 6ED5           00061             MOVWF       T0CON
-000108 94F2           00062             BCF         INTCON,TMR0IF
-00010A 0E9E           00063             MOVLW       0X9E
-00010C 6ED7           00064             MOVWF       TMR0H
-00010E 0E57           00065             MOVLW       0X57
-000110 6ED6           00066             MOVWF       TMR0L
-000112 8ED5           00067             BSF         T0CON,TMR0ON
-000114 EF?? F???      00068             GOTO        BUCLE_RETARDO 
+00009C 6ED5           00061             MOVWF       T0CON
+00009E 94F2           00062             BCF         INTCON,TMR0IF
+0000A0 0E9E           00063             MOVLW       0X9E
+0000A2 6ED7           00064             MOVWF       TMR0H
+0000A4 0E57           00065             MOVLW       0X57
+0000A6 6ED6           00066             MOVWF       TMR0L
+0000A8 8ED5           00067             BSF         T0CON,TMR0ON
+0000AA EF?? F???      00068             GOTO        BUCLE_RETARDO 
                       00069             
-000118                00070 RET_10MS
-000118 0E02           00071             MOVLW       B'00000010'         ;EMPEZAR DETENIDO, MODO 16 BITS, CLK INTERNO (FCY),PREE ASIG
+0000AE                00070 RET_10MS
+0000AE 0E02           00071             MOVLW       B'00000010'         ;EMPEZAR DETENIDO, MODO 16 BITS, CLK INTERNO (FCY),PREE ASIG
                             NADO; PRE= 1:2   
-00011A 6ED5           00072             MOVWF       T0CON
-00011C 94F2           00073             BCF         INTCON,TMR0IF
-00011E 0EB1           00074             MOVLW       0XB1
-000120 6ED7           00075             MOVWF       TMR0H
-000122 0EE0           00076             MOVLW       0XE0
-000124 6ED6           00077             MOVWF       TMR0L
-000126 8ED5           00078             BSF         T0CON,TMR0ON
-000128 EF?? F???      00079             GOTO        BUCLE_RETARDO
+0000B0 6ED5           00072             MOVWF       T0CON
+0000B2 94F2           00073             BCF         INTCON,TMR0IF
+0000B4 0EB1           00074             MOVLW       0XB1
+0000B6 6ED7           00075             MOVWF       TMR0H
+0000B8 0EE0           00076             MOVLW       0XE0
+0000BA 6ED6           00077             MOVWF       TMR0L
+0000BC 8ED5           00078             BSF         T0CON,TMR0ON
+0000BE EF?? F???      00079             GOTO        BUCLE_RETARDO
                       00080 
-00012C                00081 RET_1MS
+0000C2                00081 RET_1MS
                       00082             
-00012C 0E45           00083             MOVLW       B'01000101'         ;EMPEZAR DETENIDO, MODO 8 BITS, CLK INTERNO (FCY),PREE ASIGN
+0000C2 0E45           00083             MOVLW       B'01000101'         ;EMPEZAR DETENIDO, MODO 8 BITS, CLK INTERNO (FCY),PREE ASIGN
                             ADO; PRE= 1:64
-00012E 6ED5           00084             MOVWF       T0CON
-000130 94F2           00085             BCF         INTCON,TMR0IF       ;LIMPIAR BANDERA DE DESBORDAMIENTO DE TMR0
-000132 0E04           00086             MOVLW       .4
-000134 6ED6           00087             MOVWF       TMR0                ;CARGAR EL REGISTRO TMR0
-000136 8ED5           00088             BSF         T0CON,TMR0ON        ;ENCENDER EL TEMPORIZADOR
-000138 EF?? F???      00089             GOTO        BUCLE_RETARDO
+0000C4 6ED5           00084             MOVWF       T0CON
+0000C6 94F2           00085             BCF         INTCON,TMR0IF       ;LIMPIAR BANDERA DE DESBORDAMIENTO DE TMR0
+0000C8 0E04           00086             MOVLW       .4
+0000CA 6ED6           00087             MOVWF       TMR0                ;CARGAR EL REGISTRO TMR0
+0000CC 8ED5           00088             BSF         T0CON,TMR0ON        ;ENCENDER EL TEMPORIZADOR
+0000CE EF?? F???      00089             GOTO        BUCLE_RETARDO
                       00090             
-00013C                00091 RET_5MS
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE  7
-
-
-LOC  OBJECT CODE     LINE SOURCE TEXT
-  VALUE
-
-00013C 0E00           00092             MOVLW       B'00000000'         ;EMPEZAR DETENIDO, MODO 16 BITS, CLK INTERNO (FCY),PREE ASIG
+0000D2                00091 RET_5MS
+0000D2 0E00           00092             MOVLW       B'00000000'         ;EMPEZAR DETENIDO, MODO 16 BITS, CLK INTERNO (FCY),PREE ASIG
                             NADO; PRE= 1:2   
-00013E 6ED5           00093             MOVWF       T0CON
-000140 94F2           00094             BCF         INTCON,TMR0IF
-000142 0E52           00095             MOVLW       .82
-000144 6ED6           00096             MOVWF       TMR0L
-000146 0E63           00097             MOVLW       .99
-000148 6ED7           00098             MOVWF       TMR0H
-00014A 8ED5           00099             BSF         T0CON,TMR0ON
-00014C EF?? F???      00100             GOTO        BUCLE_RETARDO
+0000D4 6ED5           00093             MOVWF       T0CON
+0000D6 94F2           00094             BCF         INTCON,TMR0IF
+0000D8 0E52           00095             MOVLW       .82
+0000DA 6ED6           00096             MOVWF       TMR0L
+0000DC 0E63           00097             MOVLW       .99
+0000DE 6ED7           00098             MOVWF       TMR0H
+0000E0 8ED5           00099             BSF         T0CON,TMR0ON
+0000E2 EF?? F???      00100             GOTO        BUCLE_RETARDO
                       00101             
-000150                00102 RET_16MS
-000150 0E04           00103             MOVLW       B'00000100'         ;EMPEZAR DETENIDO, MODO 16 BITS, CLK INTERNO (FCY),PREE ASIG
+0000E6                00102 RET_16MS
+0000E6 0E04           00103             MOVLW       B'00000100'         ;EMPEZAR DETENIDO, MODO 16 BITS, CLK INTERNO (FCY),PREE ASIG
                             NADO; PRE= 1:2   
-000152 6ED5           00104             MOVWF       T0CON
-000154 94F2           00105             BCF         INTCON,TMR0IF
-000156 0EE0           00106             MOVLW       0XE0
-000158 6ED7           00107             MOVWF       TMR0H
-00015A 0EBF           00108             MOVLW       0XBF
-00015C 6ED6           00109             MOVWF       TMR0L
-00015E 8ED5           00110             BSF         T0CON,TMR0ON
-000160 EF?? F???      00111             GOTO        BUCLE_RETARDO
-                      00112             
-000164                00113 RET_500US
-000164 0E04           00114             MOVLW       B'00000100'         ;EMPEZAR DETENIDO, MODO 16 BITS, CLK INTERNO (FCY),PREE ASIG
-                            NADO; PRE= 1:2   
-000166 6ED5           00115             MOVWF       T0CON
-000168 94F2           00116             BCF         INTCON,TMR0IF
-00016A 0EFF           00117             MOVLW       0XFF
-00016C 6ED7           00118             MOVWF       TMR0H
-00016E 0E05           00119             MOVLW       0X05
-000170 6ED6           00120             MOVWF       TMR0L
-000172 8ED5           00121             BSF         T0CON,TMR0ON
-000174 EF?? F???      00122             GOTO        BUCLE_RETARDO
-                      00123             
-000178                00124 RET_250US
-000178 0E04           00125             MOVLW       B'00000100'         ;EMPEZAR DETENIDO, MODO 16 BITS, CLK INTERNO (FCY),PREE ASIG
-                            NADO; PRE= 1:2   
-00017A 6ED5           00126             MOVWF       T0CON
-00017C 94F2           00127             BCF         INTCON,TMR0IF
-00017E 0EFF           00128             MOVLW       0XFF
-000180 6ED7           00129             MOVWF       TMR0H
-000182 0E82           00130             MOVLW       0X82
-000184 6ED6           00131             MOVWF       TMR0L
-000186 8ED5           00132             BSF         T0CON,TMR0ON
-000188 EF?? F???      00133             GOTO        BUCLE_RETARDO
-                      00134             
-00018C                00135 RET_18MS
-00018C 0E04           00136             MOVLW       B'00000100'         ;EMPEZAR DETENIDO, MODO 16 BITS, CLK INTERNO (FCY),PREE ASIG
-                            NADO; PRE= 1:2   
-00018E 6ED5           00137             MOVWF       T0CON
-000190 94F2           00138             BCF         INTCON,TMR0IF
-000192 0EDC           00139             MOVLW       0XDC
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE  8
+0000E8 6ED5           00104             MOVWF       T0CON
+0000EA 94F2           00105             BCF         INTCON,TMR0IF
+0000EC 0EE0           00106             MOVLW       0XE0
+0000EE 6ED7           00107             MOVWF       TMR0H
+0000F0 0EBF           00108             MOVLW       0XBF
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE  7
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000194 6ED7           00140             MOVWF       TMR0H
-000196 0ED7           00141             MOVLW       0XD7
-000198 6ED6           00142             MOVWF       TMR0L
-00019A 8ED5           00143             BSF         T0CON,TMR0ON
-00019C EF?? F???      00144             GOTO        BUCLE_RETARDO
+0000F2 6ED6           00109             MOVWF       TMR0L
+0000F4 8ED5           00110             BSF         T0CON,TMR0ON
+0000F6 EF?? F???      00111             GOTO        BUCLE_RETARDO
+                      00112             
+0000FA                00113 RET_500US
+0000FA 0E04           00114             MOVLW       B'00000100'         ;EMPEZAR DETENIDO, MODO 16 BITS, CLK INTERNO (FCY),PREE ASIG
+                            NADO; PRE= 1:2   
+0000FC 6ED5           00115             MOVWF       T0CON
+0000FE 94F2           00116             BCF         INTCON,TMR0IF
+000100 0EFF           00117             MOVLW       0XFF
+000102 6ED7           00118             MOVWF       TMR0H
+000104 0E05           00119             MOVLW       0X05
+000106 6ED6           00120             MOVWF       TMR0L
+000108 8ED5           00121             BSF         T0CON,TMR0ON
+00010A EF?? F???      00122             GOTO        BUCLE_RETARDO
+                      00123             
+00010E                00124 RET_250US
+00010E 0E04           00125             MOVLW       B'00000100'         ;EMPEZAR DETENIDO, MODO 16 BITS, CLK INTERNO (FCY),PREE ASIG
+                            NADO; PRE= 1:2   
+000110 6ED5           00126             MOVWF       T0CON
+000112 94F2           00127             BCF         INTCON,TMR0IF
+000114 0EFF           00128             MOVLW       0XFF
+000116 6ED7           00129             MOVWF       TMR0H
+000118 0E82           00130             MOVLW       0X82
+00011A 6ED6           00131             MOVWF       TMR0L
+00011C 8ED5           00132             BSF         T0CON,TMR0ON
+00011E EF?? F???      00133             GOTO        BUCLE_RETARDO
+                      00134             
+000122                00135 RET_18MS
+000122 0E04           00136             MOVLW       B'00000100'         ;EMPEZAR DETENIDO, MODO 16 BITS, CLK INTERNO (FCY),PREE ASIG
+                            NADO; PRE= 1:2   
+000124 6ED5           00137             MOVWF       T0CON
+000126 94F2           00138             BCF         INTCON,TMR0IF
+000128 0EDC           00139             MOVLW       0XDC
+00012A 6ED7           00140             MOVWF       TMR0H
+00012C 0ED7           00141             MOVLW       0XD7
+00012E 6ED6           00142             MOVWF       TMR0L
+000130 8ED5           00143             BSF         T0CON,TMR0ON
+000132 EF?? F???      00144             GOTO        BUCLE_RETARDO
                       00145             
-0001A0                00146 BUCLE_RETARDO
-0001A0 A4F2           00147             BTFSS       INTCON,TMR0IF       ;EL LA BANDERA SE PUSO A 1?
-0001A2 EF?? F???      00148             GOTO        BUCLE_RETARDO       ;NO, QUEDATE EN UN BUCLE Y DETEN LA EJECUCION CODIGO
-0001A6 94F2           00149             BCF         INTCON,TMR0IF       ;SI, LIMPIAR LA BANDERA DE DESBORDAMIENTO TMR0
-0001A8 9ED5           00150             BCF         T0CON,TMR0ON        ;APAGAR EL TEMPORIZADOR
-0001AA 0012           00151             RETURN
+000136                00146 BUCLE_RETARDO
+000136 A4F2           00147             BTFSS       INTCON,TMR0IF       ;EL LA BANDERA SE PUSO A 1?
+000138 EF?? F???      00148             GOTO        BUCLE_RETARDO       ;NO, QUEDATE EN UN BUCLE Y DETEN LA EJECUCION CODIGO
+00013C 94F2           00149             BCF         INTCON,TMR0IF       ;SI, LIMPIAR LA BANDERA DE DESBORDAMIENTO TMR0
+00013E 9ED5           00150             BCF         T0CON,TMR0ON        ;APAGAR EL TEMPORIZADOR
+000140 0012           00151             RETURN
                       00152 
                       00153 
-                      00187             
-                      00188             END
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE  9
+                      00170             
+                      00171             END
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE  8
 
 
 SYMBOL TABLE
@@ -470,7 +445,6 @@ ADRES                             00000FC3
 ADRESH                            00000FC4
 ADRESL                            00000FC3
 AHEN                              00000001
-ALTA_PRIORIDAD                    00000032
 AN0                               00000000
 AN1                               00000001
 AN10                              00000001
@@ -492,13 +466,13 @@ ANSA0                             00000000
 ANSA1                             00000001
 ANSA2                             00000002
 ANSA3                             00000003
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE 10
+ANSA5                             00000005
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE  9
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-ANSA5                             00000005
 ANSB0                             00000000
 ANSB1                             00000001
 ANSB2                             00000002
@@ -514,8 +488,6 @@ ANSC7                             00000007
 ANSELA                            00000F38
 ANSELB                            00000F39
 ANSELC                            00000F3A
-ANTIHORARIO                       00000092
-BAJA_PRIORIDAD                    0000001C
 BANKED                            00000001
 BAUD1CON                          00000FB8
 BAUD2CON                          00000F70
@@ -542,8 +514,7 @@ BRGH                              00000002
 BRGH1                             00000002
 BRGH2                             00000002
 BSR                               00000FE0
-BSR_TEMP                          00000002
-BUCLE_RETARDO                     000001A0
+BUCLE_RETARDO                     00000136
 C                                 00000000
 C12IN0M                           00000000
 C12IN0N                           00000000
@@ -551,16 +522,16 @@ C12IN1M                           00000001
 C12IN1N                           00000001
 C12IN2M                           00000003
 C12IN2N                           00000003
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE 11
+C12IN3M                           00000001
+C12IN3N                           00000001
+C1CH0                             00000000
+C1CH1                             00000001
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE 10
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-C12IN3M                           00000001
-C12IN3N                           00000001
-C1CH0                             00000000
-C1CH1                             00000001
 C1HYS                             00000003
 C1IE                              00000006
 C1IF                              00000006
@@ -610,16 +581,16 @@ CCP1AS2                           00000006
 CCP1ASE                           00000007
 CCP1CON                           00000FBD
 CCP1IE                            00000002
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE 12
+CCP1IF                            00000002
+CCP1IP                            00000002
+CCP1M0                            00000000
+CCP1M1                            00000001
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE 11
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-CCP1IF                            00000002
-CCP1IP                            00000002
-CCP1M0                            00000000
-CCP1M1                            00000001
 CCP1M2                            00000002
 CCP1M3                            00000003
 CCP1MD                            00000000
@@ -669,16 +640,16 @@ CCP5                              00000004
 CCP5CON                           00000F54
 CCP5IE                            00000002
 CCP5IF                            00000002
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE 13
+CCP5IP                            00000002
+CCP5M0                            00000000
+CCP5M1                            00000001
+CCP5M2                            00000002
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE 12
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-CCP5IP                            00000002
-CCP5M0                            00000000
-CCP5M1                            00000001
-CCP5M2                            00000002
 CCP5M3                            00000003
 CCP5MD                            00000004
 CCPR1                             00000FBE
@@ -728,16 +699,16 @@ CTED1                             00000002
 CTED2                             00000003
 CTMUCON0                          00000F45
 CTMUCON1                          00000F44
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE 14
+CTMUCONH                          00000F45
+CTMUCONL                          00000F44
+CTMUEN                            00000007
+CTMUICON                          00000F43
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE 13
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-CTMUCONH                          00000F45
-CTMUCONL                          00000F44
-CTMUEN                            00000007
-CTMUICON                          00000F43
 CTMUICONH                         00000F43
 CTMUIE                            00000003
 CTMUIF                            00000003
@@ -783,19 +754,20 @@ DONE                              00000001
 DT1                               00000007
 DT2                               00000007
 DTRXP                             00000005
+DUTY                              00000000
 D_A                               00000005
 D_NOT_A                           00000005
 ECCP1AS                           00000FB6
 ECCP2AS                           00000F64
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE 15
+ECCP3AS                           00000F5B
+ECCPAS                            00000FB6
+ECCPAS0                           00000004
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE 14
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-ECCP3AS                           00000F5B
-ECCPAS                            00000FB6
-ECCPAS0                           00000004
 ECCPAS1                           00000005
 ECCPAS2                           00000006
 ECCPASE                           00000007
@@ -832,7 +804,6 @@ FAST                              00000001
 FERR                              00000002
 FERR1                             00000002
 FERR2                             00000002
-FIN_INTER                         00000026
 FLT0                              00000000
 FREE                              00000004
 FSR0                              00000000
@@ -846,16 +817,16 @@ FSR2H                             00000FDA
 FSR2L                             00000FD9
 FVRCON                            00000F42
 FVREN                             00000007
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE 16
+FVRS0                             00000004
+FVRS1                             00000005
+FVRST                             00000006
+GCEN                              00000007
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE 15
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-FVRS0                             00000004
-FVRS1                             00000005
-FVRST                             00000006
-GCEN                              00000007
 GIE                               00000007
 GIEH                              00000007
 GIEL                              00000006
@@ -874,13 +845,12 @@ HLVDL0                            00000000
 HLVDL1                            00000001
 HLVDL2                            00000002
 HLVDL3                            00000003
-HORARIO                           00000070
 IDISSEN                           00000001
 IDLEN                             00000007
 INDF0                             00000FEF
 INDF1                             00000FE7
 INDF2                             00000FDF
-INICIO                            00000036
+INICIO                            00000004
 INT0                              00000000
 INT0E                             00000004
 INT0F                             00000001
@@ -905,17 +875,17 @@ INTCON2                           00000FF1
 INTCON3                           00000FF0
 INTEDG0                           00000006
 INTEDG1                           00000005
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE 17
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 INTEDG2                           00000004
 INTSRC                            00000007
 IOCB                              00000F62
 IOCB4                             00000004
 IOCB5                             00000005
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE 16
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 IOCB6                             00000006
 IOCB7                             00000007
 IOFS                              00000002
@@ -964,17 +934,17 @@ LATC                              00000F8B
 LATC0                             00000000
 LATC1                             00000001
 LATC2                             00000002
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE 18
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 LATC3                             00000003
 LATC4                             00000004
 LATC5                             00000005
 LATC6                             00000006
 LATC7                             00000007
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE 17
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 LFIOFS                            00000000
 LVDCON                            00000F9C
 LVDEN                             00000004
@@ -1023,17 +993,17 @@ NOT_T3SYNC                        00000002
 NOT_T5SYNC                        00000002
 NOT_TO                            00000003
 NOT_W                             00000002
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE 19
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 NOT_WRITE                         00000002
 NVCFG0                            00000000
 NVCFG1                            00000001
 OERR                              00000001
 OERR1                             00000001
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE 18
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 OERR2                             00000001
 OSCCON                            00000FD3
 OSCCON2                           00000FD2
@@ -1082,17 +1052,17 @@ P2SSBD0                           00000000
 P2SSBD1                           00000001
 P3A_PORTB                         00000005
 P3A_PORTC                         00000006
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE 20
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 P3B                               00000007
 P3DC0                             00000000
 P3DC1                             00000001
 P3DC2                             00000002
 P3DC3                             00000003
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE 19
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 P3DC4                             00000004
 P3DC5                             00000005
 P3DC6                             00000006
@@ -1141,17 +1111,17 @@ PMD1                              00000F3E
 PMD2                              00000F3D
 POR                               00000001
 PORTA                             00000F80
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE 21
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 PORTB                             00000F81
 PORTC                             00000F82
 PORTE                             00000F84
 POSTDEC0                          00000FED
 POSTDEC1                          00000FE5
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE 20
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 POSTDEC2                          00000FDD
 POSTINC0                          00000FEE
 POSTINC1                          00000FE6
@@ -1162,7 +1132,7 @@ PR6                               00000F4B
 PREINC0                           00000FEC
 PREINC1                           00000FE4
 PREINC2                           00000FDC
-PRINCIPAL                         00000060
+PRINCIPAL                         0000003C
 PRISD                             00000002
 PROD                              00000FF3
 PRODH                             00000FF4
@@ -1200,17 +1170,17 @@ RA0                               00000000
 RA1                               00000001
 RA2                               00000002
 RA3                               00000003
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE 22
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 RA4                               00000004
 RA5                               00000005
 RA6                               00000006
 RA7                               00000007
 RB0                               00000000
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE 21
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 RB1                               00000001
 RB2                               00000002
 RB3                               00000003
@@ -1256,24 +1226,24 @@ RD                                00000000
 RD16                              00000001
 RE3                               00000003
 RETARDO                           RET_50MS
-RET_100MS                         000000F0
-RET_10MS                          00000118
-RET_16MS                          00000150
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE 23
+RET_100MS                         00000086
+RET_10MS                          000000AE
+RET_16MS                          000000E6
+RET_18MS                          00000122
+RET_1MS                           000000C2
+RET_1S                            0000005E
+RET_250US                         0000010E
+RET_500MS                         00000072
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE 22
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-RET_18MS                          0000018C
-RET_1MS                           0000012C
-RET_1S                            000000C8
-RET_250US                         00000178
-RET_500MS                         000000DC
-RET_500US                         00000164
-RET_50MS                          00000104
-RET_5MS                           0000013C
-RET_SERVO                         000000B4
+RET_500US                         000000FA
+RET_50MS                          0000009A
+RET_5MS                           000000D2
+RET_SERVO                         0000004A
 RI                                00000004
 RSEN                              00000001
 RX                                00000007
@@ -1318,17 +1288,17 @@ SLRA                              00000000
 SLRB                              00000001
 SLRC                              00000002
 SLRCON                            00000F60
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE 24
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 SMP                               00000007
 SOSCGO                            00000003
 SOSCRUN                           00000006
 SP0                               00000000
 SP1                               00000001
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE 23
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 SP1BRG                            00000FAF
 SP1BRGH                           00000FB0
 SP2                               00000002
@@ -1377,17 +1347,17 @@ SSP1BUF                           00000FC9
 SSP1CON1                          00000FC6
 SSP1CON2                          00000FC5
 SSP1CON3                          00000FCB
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE 25
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 SSP1IE                            00000003
 SSP1IF                            00000003
 SSP1IP                            00000003
 SSP1MSK                           00000FCA
 SSP1STAT                          00000FC7
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE 24
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 SSP2ADD                           00000F6E
 SSP2BUF                           00000F6F
 SSP2CON1                          00000F6C
@@ -1415,7 +1385,6 @@ SSPMSK                            00000FCA
 SSPOV                             00000006
 SSPSTAT                           00000FC7
 STATUS                            00000FD8
-STATUS_TEMP                       00000001
 STKFUL                            00000007
 STKOVF                            00000007
 STKPTR                            00000FFC
@@ -1436,18 +1405,18 @@ STR2C                             00000002
 STR2D                             00000003
 STR2SYNC                          00000004
 STR3A                             00000000
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE 26
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 STR3B                             00000001
 STR3C                             00000002
 STR3D                             00000003
 STR3SYNC                          00000004
 SWDTE                             00000000
 SWDTEN                            00000000
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE 25
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 SW_ANTIHORARIO                    PORTA,1
 SW_HORARIO                        PORTA,0
 SYNC                              00000004
@@ -1495,18 +1464,18 @@ T3CKI_PORTB                       00000005
 T3CKI_PORTC                       00000000
 T3CKPS0                           00000004
 T3CKPS1                           00000005
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE 27
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 T3CON                             00000FB1
 T3G                               00000000
 T3GCON                            00000FB4
 T3GGO                             00000003
 T3GGO_NOT_DONE                    00000003
 T3GPOL                            00000006
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE 26
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 T3GSPM                            00000004
 T3GSS0                            00000000
 T3GSS1                            00000001
@@ -1554,18 +1523,18 @@ TBLPTRH                           00000FF7
 TBLPTRL                           00000FF6
 TBLPTRU                           00000FF8
 TGEN                              00000004
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE 28
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 TMR0                              00000FD6
 TMR0H                             00000FD7
 TMR0IE                            00000005
 TMR0IF                            00000002
 TMR0IP                            00000002
 TMR0L                             00000FD6
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE 27
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 TMR0ON                            00000007
 TMR1                              00000FCE
 TMR1CS0                           00000006
@@ -1613,18 +1582,18 @@ TMR5CS1                           00000007
 TMR5GE                            00000007
 TMR5GIE                           00000002
 TMR5GIF                           00000002
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE 29
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 TMR5GIP                           00000002
 TMR5H                             00000F50
 TMR5IE                            00000001
 TMR5IF                            00000001
 TMR5IP                            00000001
 TMR5L                             00000F4F
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE 28
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 TMR5MD                            00000004
 TMR5ON                            00000000
 TMR6                              00000F4C
@@ -1672,18 +1641,18 @@ TRMT1                             00000001
 TRMT2                             00000001
 TUN0                              00000000
 TUN1                              00000001
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE 30
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 TUN2                              00000002
 TUN3                              00000003
 TUN4                              00000004
 TUN5                              00000005
 TX                                00000006
 TX1                               00000006
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE 29
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 TX1IE                             00000004
 TX1IF                             00000004
 TX1IP                             00000004
@@ -1731,24 +1700,23 @@ WPUB                              00000F61
 WPUB0                             00000000
 WPUB1                             00000001
 WPUB2                             00000002
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE 31
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 WPUB3                             00000003
 WPUB4                             00000004
 WPUB5                             00000005
 WPUB6                             00000006
 WPUB7                             00000007
 WPUE3                             00000007
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE 30
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 WR                                00000001
 WREG                              00000FE8
 WREN                              00000002
 WRERR                             00000003
 WUE                               00000001
-W_TEMP                            00000000
 Z                                 00000002
 _BOREN_NOSLP_2L                   000000FD
 _BOREN_OFF_2L                     000000F9
@@ -1790,12 +1758,6 @@ _DEBUG_ON_4L                      0000007F
 _DEVID1                           003FFFFE
 _DEVID2                           003FFFFF
 _EBTR0_OFF_7L                     000000FF
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE 32
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 _EBTR0_ON_7L                      000000FE
 _EBTR1_OFF_7L                     000000FF
 _EBTR1_ON_7L                      000000FD
@@ -1803,6 +1765,12 @@ _EBTR2_OFF_7L                     000000FF
 _EBTR2_ON_7L                      000000FB
 _EBTR3_OFF_7L                     000000FF
 _EBTR3_ON_7L                      000000F7
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE 31
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 _EBTRB_OFF_7H                     000000FF
 _EBTRB_ON_7H                      000000BF
 _FCMEN_OFF_1H                     000000BF
@@ -1849,12 +1817,6 @@ _PWRTEN_OFF_2L                    000000FF
 _PWRTEN_ON_2L                     000000FE
 _STVREN_OFF_4L                    000000FE
 _STVREN_ON_4L                     000000FF
-MPASM 5.87                          MAIN.ASM   3-2-2022  18:58:37         PAGE 33
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 _T3CMX_PORTB5_3H                  000000EF
 _T3CMX_PORTC0_3H                  000000FF
 _WDTEN_NOSLP_2H                   000000FD
@@ -1862,6 +1824,12 @@ _WDTEN_OFF_2H                     000000FC
 _WDTEN_ON_2H                      000000FF
 _WDTEN_SWON_2H                    000000FE
 _WDTPS_1024_2H                    000000EB
+MPASM 5.87                          MAIN.ASM   3-5-2022  19:04:44         PAGE 32
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 _WDTPS_128_2H                     000000DF
 _WDTPS_16384_2H                   000000FB
 _WDTPS_16_2H                      000000D3

@@ -74,11 +74,12 @@
   
 	CBLOCK	0x00			;QUE EMPIECE EN LA PRIMERA DIRECCION DE LA MEMORIA RAM
 	;VARIABLES PARA EL MANEJO DE INTERRUPCIONES
-	W_TEMP
-	STATUS_TEMP
-	BSR_TEMP
-
+	;W_TEMP
+	;STATUS_TEMP
+	;BSR_TEMP
+	
 	;VARIABLES PARA EJECUCION DEL PROGRAMA
+	DUTY
 	ENDC
 ;VALORES DEFINIDOS:
 
@@ -130,18 +131,37 @@ INICIO
 ;*********************************************************************************
 ;**************************  ZONA DE CODIGO USUARIO  *****************************
 ;*********************************************************************************	
-	    BCF		TRISB,0
-	    BCF		TRISB,1
-	    BCF		TRISB,2
-	    BCF		TRISB,3
+	;CONFIGURACIÓN PWM: PARA EL FUNCIONAMIENTO SE NECESITA UN TEMPORIZADOR,
+	;EN ESTE CASO USAREMOS EL TMR2
+	    BSF		TRISC,2		    ;PIN RC2 CCP1 MODO PWM
 	    
-	    BSF		TRISA,0
-	    BSF		TRISA,1
+	    BCF		CCPTMRS0,0	    ;SELECCION DEL TIMER 2, PARA MODULO PWM
+	    BCF		CCPTMRS0,1
+	    
+	    MOVLW	0X63		    
+	    MOVWF	PR2		    ;PERIODO DEL PWM, PARA UNA FRECUENCIA DE 10KHZ, CON PREESCALER DE 16
+	    
+	    MOVLW	B'00001100'
+	    MOVWF	CCP1CON		    ;CONFIGURAR MODULO CCP, EN MODO PWM
+	    
+	    CLRF	CCPR1L		    ;CARGAR EL DUTY CYCLE CON 0
+	    
+	    MOVLW	B'00000111'
+	    MOVWF	T2CON		    ;ENCENDER EL TMR2 CON UN PRESCALER DE 16
+	    
+	    BCF		PIR1,TMR2IF	    ;LIMPIAR LA BANDERA DE INTERRUPCION DEL TMR2
+	    
+	    BCF		TRISC,2		    ;HABILITAR LA SALIDA PWM DEL MODULO CCP1 (RC2)
+	    
 	    
 ;**********************************LOOP***********************************************	    
+	    CLRF	DUTY
 PRINCIPAL
-
+	    MOVFF	DUTY,CCPR1L
+	    INCF	DUTY,F
+	    CALL	RET_100MS
 	    
+	    GOTO	PRINCIPAL
 	    
 ;**********************************SUBRUTINAS******************************************** 
 
