@@ -1,0 +1,270 @@
+MPLINK 5.09, LINKER
+Linker Map File - Created Fri Mar 11 20:50:20 2022
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000004
+                   .cinit    romdata   0x000004    program   0x000002
+                   .org_1       code   0x000008    program   0x000004
+                   .org_2       code   0x000018    program   0x000420
+.config_300001_BUILD/DEFAULT/PRODUCTION/MAIN.O    romdata   0x300001    program   0x000001
+.config_300002_BUILD/DEFAULT/PRODUCTION/MAIN.O    romdata   0x300002    program   0x000001
+.config_300003_BUILD/DEFAULT/PRODUCTION/MAIN.O    romdata   0x300003    program   0x000001
+.config_300005_BUILD/DEFAULT/PRODUCTION/MAIN.O    romdata   0x300005    program   0x000001
+.config_300006_BUILD/DEFAULT/PRODUCTION/MAIN.O    romdata   0x300006    program   0x000001
+.config_300008_BUILD/DEFAULT/PRODUCTION/MAIN.O    romdata   0x300008    program   0x000001
+.config_300009_BUILD/DEFAULT/PRODUCTION/MAIN.O    romdata   0x300009    program   0x000001
+.config_30000A_BUILD/DEFAULT/PRODUCTION/MAIN.O    romdata   0x30000a    program   0x000001
+.config_30000B_BUILD/DEFAULT/PRODUCTION/MAIN.O    romdata   0x30000b    program   0x000001
+.config_30000C_BUILD/DEFAULT/PRODUCTION/MAIN.O    romdata   0x30000c    program   0x000001
+.config_30000D_BUILD/DEFAULT/PRODUCTION/MAIN.O    romdata   0x30000d    program   0x000001
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000005      
+                            0x000008    0x00000b      
+                            0x000018    0x000437      
+                            0x300001    0x300003      
+                            0x300005    0x300006      
+                            0x300008    0x30000d      
+            1077 out of 66584 program addresses used, program memory utilization is 1%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+           ALTA_PRIORIDAD   0x000032    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\main.asm
+           BAJA_PRIORIDAD   0x00001c    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\main.asm
+           BSUMA_CENTENAS   0x0000c8    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+            BSUMA_DECENAS   0x0000de    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+           BSUMA_UNIDADES   0x0000e6    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+              BS_CENTENAS   0x0000ba    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+               BS_DECENAS   0x0000d0    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+            BUCLE_RETARDO   0x00042c    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\MY_RETARDOS.inc
+           CONVERSION_BCD   0x0000ec    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+           CONVERSION_BIN   0x0000b2    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+              ENVIAR_DATO   0x000264    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                FIN_INTER   0x000026    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\main.asm
+                   INICIO   0x000036    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\main.asm
+                  INI_LCD   0x00012e    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+      LCD_2Lineas4Bits5x7   0x000258    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_Byte   0x0002f2    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+         LCD_ByteCompleto   0x000306    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_CLEAR   0x000254    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+             LCD_CLEAR_L1   0x0002b8    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+             LCD_CLEAR_L2   0x0002c2    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+             LCD_CLEAR_L3   0x0002cc    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+             LCD_CLEAR_L4   0x0002d6    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                  LCD_CMD   0x00025a    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_CTMP   0x00018c    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+           LCD_CURSOR_BON   0x000260    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_C_OFF   0x000250    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_C_ON   0x00024c    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+          LCD_CodigoCGROM   0x000282    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+           LCD_CursorIncr   0x000188    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+        LCD_EnheMayuscula   0x000294    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+        LCD_EnheMinuscula   0x000284    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_Envia   0x00026a    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+       LCD_EnviaByteLetra   0x000324    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+             LCD_FinCGROM   0x0002b4    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+   LCD_FinVisualizaDigito   0x000328    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_Grado   0x0002a6    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                   LCD_L1   0x000198    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+               LCD_L1MENU   0x000190    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                   LCD_L2   0x00019c    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+               LCD_L2MENU   0x000194    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                   LCD_L3   0x0001a0    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L3.10   0x0001c4    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L3.11   0x0001c8    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L3.12   0x0001cc    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L3.13   0x0001d0    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L3.14   0x0001d4    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L3.15   0x0001d8    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L3.16   0x0001dc    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L3.17   0x0001e0    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L3.18   0x0001e4    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L3.19   0x0001e8    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L3.2   0x0001a4    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L3.20   0x0001ec    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L3.3   0x0001a8    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L3.4   0x0001ac    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L3.5   0x0001b0    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L3.6   0x0001b4    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L3.7   0x0001b8    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L3.8   0x0001bc    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L3.9   0x0001c0    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                   LCD_L4   0x0001f0    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L4.10   0x000214    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L4.11   0x000218    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L4.12   0x00021c    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L4.13   0x000220    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L4.14   0x000224    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L4.15   0x000228    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L4.16   0x00022c    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L4.17   0x000230    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L4.18   0x000234    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L4.19   0x000238    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L4.2   0x0001f4    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L4.20   0x00023c    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L4.3   0x0001f8    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L4.4   0x0001fc    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L4.5   0x000200    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L4.6   0x000204    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L4.7   0x000208    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L4.8   0x00020c    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L4.9   0x000210    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+          LCD_LINEA_CLEAR   0x0002e0    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+               LCD_Nibble   0x000310    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                  LCD_OFF   0x000248    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+       LCD_PosicionLinea1   0x000240    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+       LCD_PosicionLinea2   0x000244    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+           LCD_SEND_WHITE   0x0002e4    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+        LCD_VisualizaAlto   0x000308    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+        LCD_VisualizaBajo   0x00030e    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_WRITE   0x000174    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                PRINCIPAL   0x000064    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\main.asm
+           PRINT_VALOR_F1   0x000070    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\main.asm
+           PRINT_VALOR_F2   0x00008e    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\main.asm
+                RET_100MS   0x000368    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\MY_RETARDOS.inc
+                RET_100US   0x000404    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\MY_RETARDOS.inc
+                 RET_10MS   0x000390    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\MY_RETARDOS.inc
+                 RET_16MS   0x0003c8    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\MY_RETARDOS.inc
+                 RET_18MS   0x000418    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\MY_RETARDOS.inc
+                  RET_1MS   0x0003a4    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\MY_RETARDOS.inc
+                   RET_1S   0x000340    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\MY_RETARDOS.inc
+                RET_250US   0x0003f0    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\MY_RETARDOS.inc
+                RET_500MS   0x000354    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\MY_RETARDOS.inc
+                RET_500US   0x0003dc    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\MY_RETARDOS.inc
+                 RET_50MS   0x00037c    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\MY_RETARDOS.inc
+                  RET_5MS   0x0003b4    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\MY_RETARDOS.inc
+                RET_SERVO   0x00032c    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\MY_RETARDOS.inc
+               SET_CURSOR   0x00025e    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+            SUMA_CENTENAS   0x000102    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+             SUMA_DECENAS   0x000118    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+            SUMA_UNIDADES   0x000120    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+               S_CENTENAS   0x0000f4    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                S_DECENAS   0x00010a    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+           BAJA_PRIORIDAD   0x00001c    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\main.asm
+                FIN_INTER   0x000026    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\main.asm
+           ALTA_PRIORIDAD   0x000032    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\main.asm
+                   INICIO   0x000036    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\main.asm
+                PRINCIPAL   0x000064    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\main.asm
+           PRINT_VALOR_F1   0x000070    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\main.asm
+           PRINT_VALOR_F2   0x00008e    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\main.asm
+           CONVERSION_BIN   0x0000b2    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+              BS_CENTENAS   0x0000ba    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+           BSUMA_CENTENAS   0x0000c8    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+               BS_DECENAS   0x0000d0    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+            BSUMA_DECENAS   0x0000de    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+           BSUMA_UNIDADES   0x0000e6    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+           CONVERSION_BCD   0x0000ec    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+               S_CENTENAS   0x0000f4    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+            SUMA_CENTENAS   0x000102    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                S_DECENAS   0x00010a    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+             SUMA_DECENAS   0x000118    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+            SUMA_UNIDADES   0x000120    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                  INI_LCD   0x00012e    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_WRITE   0x000174    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+           LCD_CursorIncr   0x000188    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_CTMP   0x00018c    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+               LCD_L1MENU   0x000190    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+               LCD_L2MENU   0x000194    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                   LCD_L1   0x000198    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                   LCD_L2   0x00019c    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                   LCD_L3   0x0001a0    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L3.2   0x0001a4    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L3.3   0x0001a8    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L3.4   0x0001ac    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L3.5   0x0001b0    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L3.6   0x0001b4    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L3.7   0x0001b8    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L3.8   0x0001bc    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L3.9   0x0001c0    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L3.10   0x0001c4    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L3.11   0x0001c8    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L3.12   0x0001cc    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L3.13   0x0001d0    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L3.14   0x0001d4    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L3.15   0x0001d8    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L3.16   0x0001dc    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L3.17   0x0001e0    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L3.18   0x0001e4    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L3.19   0x0001e8    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L3.20   0x0001ec    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                   LCD_L4   0x0001f0    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L4.2   0x0001f4    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L4.3   0x0001f8    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L4.4   0x0001fc    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L4.5   0x000200    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L4.6   0x000204    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L4.7   0x000208    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L4.8   0x00020c    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_L4.9   0x000210    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L4.10   0x000214    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L4.11   0x000218    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L4.12   0x00021c    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L4.13   0x000220    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L4.14   0x000224    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L4.15   0x000228    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L4.16   0x00022c    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L4.17   0x000230    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L4.18   0x000234    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L4.19   0x000238    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_L4.20   0x00023c    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+       LCD_PosicionLinea1   0x000240    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+       LCD_PosicionLinea2   0x000244    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                  LCD_OFF   0x000248    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_C_ON   0x00024c    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_C_OFF   0x000250    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_CLEAR   0x000254    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+      LCD_2Lineas4Bits5x7   0x000258    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                  LCD_CMD   0x00025a    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+               SET_CURSOR   0x00025e    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+           LCD_CURSOR_BON   0x000260    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+              ENVIAR_DATO   0x000264    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_Envia   0x00026a    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+          LCD_CodigoCGROM   0x000282    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+        LCD_EnheMinuscula   0x000284    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+        LCD_EnheMayuscula   0x000294    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                LCD_Grado   0x0002a6    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+             LCD_FinCGROM   0x0002b4    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+             LCD_CLEAR_L1   0x0002b8    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+             LCD_CLEAR_L2   0x0002c2    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+             LCD_CLEAR_L3   0x0002cc    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+             LCD_CLEAR_L4   0x0002d6    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+          LCD_LINEA_CLEAR   0x0002e0    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+           LCD_SEND_WHITE   0x0002e4    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                 LCD_Byte   0x0002f2    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+         LCD_ByteCompleto   0x000306    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+        LCD_VisualizaAlto   0x000308    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+        LCD_VisualizaBajo   0x00030e    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+               LCD_Nibble   0x000310    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+       LCD_EnviaByteLetra   0x000324    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+   LCD_FinVisualizaDigito   0x000328    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\LCD4BITS_LIB.inc
+                RET_SERVO   0x00032c    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\MY_RETARDOS.inc
+                   RET_1S   0x000340    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\MY_RETARDOS.inc
+                RET_500MS   0x000354    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\MY_RETARDOS.inc
+                RET_100MS   0x000368    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\MY_RETARDOS.inc
+                 RET_50MS   0x00037c    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\MY_RETARDOS.inc
+                 RET_10MS   0x000390    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\MY_RETARDOS.inc
+                  RET_1MS   0x0003a4    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\MY_RETARDOS.inc
+                  RET_5MS   0x0003b4    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\MY_RETARDOS.inc
+                 RET_16MS   0x0003c8    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\MY_RETARDOS.inc
+                RET_500US   0x0003dc    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\MY_RETARDOS.inc
+                RET_250US   0x0003f0    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\MY_RETARDOS.inc
+                RET_100US   0x000404    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\MY_RETARDOS.inc
+                 RET_18MS   0x000418    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\MY_RETARDOS.inc
+            BUCLE_RETARDO   0x00042c    program     static D:\Archivos\Programacion\Microcontroladores\PIC\ASSEMBLER\MPASM\PIC18F26K22\25_LIBRERIA_LCD\LIBRERIA_LCD.X\MY_RETARDOS.inc
+
+
